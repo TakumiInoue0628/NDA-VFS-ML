@@ -1,1 +1,1 @@
-# Nonlinear Dynamics Analysis of Vocal-Ventricular Fold System using Machine Learning
+# Nonlinear Dynamics Analysis of Vocal Fold System using Machine Learning
