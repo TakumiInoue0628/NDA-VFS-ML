@@ -1,1 +1,6 @@
 venv
+results
+src/0-Data-exploration/__pycache__
+src/lib/__pycache__
+src/3-Videodata-modeling/__pycache__
+src/2-Micdata-modeling/__pycache__
