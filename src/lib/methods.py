@@ -28,7 +28,7 @@ def LoadCSVandVIDEOS(csv_path, data_name_list, sample_span,
                                             shooting_time_interval=videos_shooting_time_interval
                                             )
         video_data_list.append(video_data)
-        video_t_data_list.append(video_t_data)
+        video_t_data_list.append(video_t_data+csv_t_data[0])
     return csv_data_list, video_data_list, video_t_data_list
 
 
