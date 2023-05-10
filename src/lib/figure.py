@@ -555,8 +555,8 @@ class NLP():
                 title1=None, title2=None, title3=None,
                 aspect=0.9, gamma=0.3,
                 lw_lv=3, c_lv='k', label_lv='Latent vector',
-                marker_lv_lm='o', s_lv_lm=10, c_lv_lm='b', label_lv_lm='Local maxima', legend=False,
-                xlim=(None, None), ylim=(None, None), xlabel=r'$mu $'+'[l/min]', ylabel=r'$y_l$', marker='.', c='b', s=50,
+                marker_lv_lm='o', s_lv_lm=10, c_lv_lm='b', label_lv_lm='Local maxima', legend=False, xlabel1='Time [ms]', ylabel1=r'$y(t)$',
+                xlim=(None, None), ylim=(None, None), xlabel2=r'$mu $'+'[l/min]', ylabel2=r'$y_l$', marker='.', c='b', s=50,
                 panel_list = ['(a)', '(b)', '(c)'], panel_xy_list=[(0.17, 1.05), (0.27, 1.05), (0.31, 1.05)], panel_fontsize=40, 
                 save_png=None, save_eps=None):
         spec = gridspec.GridSpec(ncols=2, nrows=2, width_ratios=width_ratios, wspace=wspace, height_ratios=height_ratios, hspace=hspace)
@@ -574,7 +574,8 @@ class NLP():
         ax2.set_title(title2, loc='left')
         ax2.plot((t-t[0])*1000, latent_vector, lw=lw_lv, c=c_lv, label=label_lv)
         ax2.plot(((t-t[0])[latent_vector_discreted_idx])*1000, latent_vector_discreted, linestyle='None', lw=0, c=c_lv_lm, marker=marker_lv_lm, markersize=s_lv_lm, label=label_lv_lm)
-        ax2.set_xlabel('Time [ms]')
+        ax2.set_ylabel(ylabel1)
+        ax2.set_xlabel(xlabel1)
         ax2.get_xaxis().set_major_formatter(plt.FormatStrFormatter('%d'))
         ax2.tick_params(labelleft=False, left=False, labelbottom=True, bottom=True)
         if legend:
@@ -588,10 +589,64 @@ class NLP():
         ax3.tick_params(labelleft=False, left=False, labelbottom=True, bottom=True)
         ax3.set_xlim(xlim)
         ax3.set_ylim(ylim)
-        ax3.set_xlabel(xlabel)
-        ax3.set_ylabel(ylabel)
+        ax3.set_xlabel(xlabel2)
+        ax3.set_ylabel(ylabel2)
         ax3.get_xaxis().set_major_formatter(plt.FormatStrFormatter('%d'))
         fig.text(ax3.get_position().x1-panel_xy_list[2][0], ax3.get_position().y1-panel_xy_list[2][1], s=panel_list[2], fontsize=panel_fontsize)
+
+        plt.tight_layout()
+        if save_png==None:
+            plt.show()
+        else:
+            plt.savefig(save_png+'.png', bbox_inches="tight")
+        if save_png==None:
+            return
+        else:
+            plt.savefig(save_eps+'.eps', bbox_inches="tight")
+
+    def figure07(self,
+                 data,
+                 conversion_param=40., 
+                 figsize=(25, 5), width_ratios=[1, 0.5], wspace=0.3,
+                 title0=None, title1=None, title_loc0='center', title_loc1='center',
+                 marker0='.', marker1='.',
+                 c0='r', c1='r',
+                 s0=50, s1=50,
+                 xlim0=(None, None), xlim1=(None, None),
+                 ylim0=(None, None), ylim1=(None, None),
+                 xlabel0=r'$mu $'+'[l/min]', xlabel1=r'$mu $'+'[l/min]',
+                 ylabel0=r'$y_l$', ylabel1=r'$y_l$',
+                 panel_list = ['(a)', '(b)'], panel_xy_list=[(0.14, 1.), (0.14, 1.)], panel_fontsize=40, 
+                 save_png=None, save_eps=None,
+                 ):
+        spec = gridspec.GridSpec(ncols=2, nrows=1,
+                                 width_ratios=width_ratios,
+                                 wspace=wspace)
+        fig = plt.figure(figsize=figsize)
+
+        ax0 = fig.add_subplot(spec[0])
+        ax0.set_title(title0, loc=title_loc0)
+        ax0.scatter(data[:, 1]*conversion_param,data[:, 0], marker=marker0, c=c0, s=s0)
+        ax0.tick_params(labelleft=True, left=True, labelbottom=True, bottom=True)
+        ax0.set_xlim(xlim0)
+        ax0.set_ylim(ylim0)
+        ax0.set_xlabel(xlabel0)
+        ax0.set_ylabel(ylabel0)
+        ax0.get_xaxis().set_major_formatter(plt.FormatStrFormatter('%d'))
+        ax0.get_yaxis().set_major_formatter(plt.FormatStrFormatter('%.1f'))
+        fig.text(ax0.get_position().x1-panel_xy_list[0][0], ax0.get_position().y1-panel_xy_list[0][1], s=panel_list[0], fontsize=panel_fontsize)
+
+        ax2 = fig.add_subplot(spec[1])
+        ax2.set_title(title1, loc=title_loc1)
+        ax2.scatter(data[:, 1]*conversion_param, data[:, 0], marker=marker1, c=c1, s=s1)
+        ax2.tick_params(labelleft=True, left=True, labelbottom=True, bottom=True)
+        ax2.set_xlim(xlim1)
+        ax2.set_ylim(ylim1)
+        ax2.set_xlabel(xlabel1)
+        ax2.set_ylabel(ylabel1)
+        ax2.get_xaxis().set_major_formatter(plt.FormatStrFormatter('%.1f'))
+        ax2.get_yaxis().set_major_formatter(plt.FormatStrFormatter('%.1f'))
+        fig.text(ax2.get_position().x1-panel_xy_list[1][0], ax2.get_position().y1-panel_xy_list[1][1], s=panel_list[1], fontsize=panel_fontsize)
 
         plt.tight_layout()
         if save_png==None:
