@@ -92,3 +92,34 @@ class MRI8_NVF4_10mm_0p0mmVVVV:
                             'n_predstep':1
                             }
     MODEL_DIR = './results/esn_model/'
+
+class MRI5_NVF1_10mm_0p4mmV_1:
+    CSV_FILE_DIR = './data/VF_FVF_DATASETS/CSV/'
+    DATA_NAME = 'MRI5_NVF1_10mm_0p4mmV_1'
+    ADDITIONAL_PATH = ''
+    SAMPLE_SPAN = [150000, 180000]
+    FILTER_METHOD = 'bandpass_filtering'
+    BANDPASS_PARAMS = {
+                    'passband_edge_freq':[90, 200], 
+                    'stopband_edge_freq':[20, 450], 
+                    'passband_edge_max_loss':1, 
+                    'stopband_edge_min_loss':10
+                    }
+    ESN_PARAMS = {
+                'units':500, 
+                'SR':1, 
+                'input_shape':10, 
+                'output_shape':10, 
+                'W_in_scale':0.1, 
+                'W_res_density':0.1, 
+                'leak_rate':1.0, 
+                'alpha':0.0005, 
+                'seed':0
+                }
+    TRAIN_TEST_DATA_PARAMS = {
+                            'n_shift':10,
+                            'n_dimension':10,
+                            'n_train':5000,
+                            'n_predstep':1
+                            }
+    MODEL_DIR = './results/esn_model/'
